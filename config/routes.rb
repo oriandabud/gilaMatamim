@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    resources :users
-
-    root to: "users#index"
+  get 'products/:id', to: 'products#show', :as => :products
+  devise_for :users, :controllers => { :registrations => 'registrations' }
+  devise_scope :user do
+    post 'pay', to: 'registrations#pay'
   end
-
-  root to: 'visitors#index'
-  devise_for :users
   resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root :to => 'visitors#index'
 end
